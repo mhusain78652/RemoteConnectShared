@@ -44,6 +44,13 @@ namespace RemoteConnect
             proc1.Arguments = "/c  mstsc " + remoteFile;
             proc1.WindowStyle = ProcessWindowStyle.Hidden;
             Process.Start(proc1);
+
+            var oldfiles = Directory.GetFiles(filePath, filaNamePattern).Except(new List<string>() { remoteFile });
+            if (oldfiles.Any())
+            {
+                foreach (var file in oldfiles)
+                    File.Delete(file);
+            }
         }
     }
 }
